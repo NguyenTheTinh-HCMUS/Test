@@ -1,0 +1,36 @@
+version: '3.5'
+
+networks:
+  localdev:
+    name: localdev
+    
+services:
+  main-api:
+    build: ./Back-End/WebApplication1/
+    restart: always
+    ports:
+      - "7000:80"
+      - "7001:443"
+
+    networks:
+      - localdev
+    depends_on: 
+      - db-server
+  db-server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: db-server
+    ports:
+      - "1433:1433"
+    volumes: 
+      - ./Store/data:/var/opt/mssql/data
+    networks:
+      - localdev
+    env_file: 
+      - ./Store/sqlserver.env
+      - ./Store/sapassword.env
+  # react-app:
+  #   build: ./front-end
+  #   container_name: c-react
+  #   ports: 
+  #     - 3000:3000
+      

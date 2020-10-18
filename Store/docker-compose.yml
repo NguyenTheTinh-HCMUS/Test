@@ -1,0 +1,19 @@
+version: "3"
+services: 
+    sql_server:
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        restart: always
+        container_name: my_mssql_main
+        ports: 
+            - 1433:1433
+        volumes: 
+            # - ./sqlsystem:/var/opt/mssql/
+            # - ./sqldata:/var/opt/sqlserver/data
+            # - ./sqllog:/var/opt/sqlserver/log
+            # - ./sqlbackup:/var/opt/sqlserver/backup
+            - ./data:/var/opt/mssql/data
+        env_file: 
+            - sqlserver.env
+            - sapassword.env
+
+
